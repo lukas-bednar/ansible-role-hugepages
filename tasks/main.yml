@@ -4,14 +4,19 @@
 
 - name: "add {{ hugepages_system_group }} user group"
   group: name={{ hugepages_system_group }} system=yes
+  when: hugepages_system_group
 
 - name: "add members to {{ hugepages_system_group }}"
   user: name={{ hugepages_system_member }} groups={{ hugepages_system_group }} append=yes
+  when:
+    - hugepages_system_group
+    - hugepages_system_member
 
 - name: "get gid of {{ hugepages_system_group }}"
   shell: "getent group {{ hugepages_system_group }} | cut -d: -f3"
   register: hugepages_system_gid
   changed_when: "hugepages_system_gid.rc != 0"
+  when: hugepages_system_group
 
 - include: RedHat.yml
   when: "ansible_os_family == 'RedHat'"

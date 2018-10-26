@@ -31,11 +31,11 @@ Since the process address space are virtual, the CPU and the operating system ha
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    hugepages_system_group: hugepages
+    hugepages_system_group: ""
 
 Name of group for access Huge Pages.
 
-    hugepages_system_member: tomcat
+    hugepages_system_member: ""
 
 User who is member of Huge Pages group.
 
@@ -47,9 +47,14 @@ Location of sysctl.d folder.
 
 Name of sysstl.d file.
 
-    hugepages_number: 3072
+    hugepages_number: 64
 
 Specify the number of large Huge Pages or large pages. In the following example 6 GB of a 8 GB system are reserved for large pages (assuming a large page size of 2048k (Hugepagesize: 2048 kB), then 6 GB = 6 x 1024 MB = 6291456 KB / 2048 KB = 3072):
+
+    hugepages_kernel_shmmax: ""
+
+Specify SHMMAX value. It must be larger than the Java heap size. On a system with 4 GB of physical RAM (or less) the 6442450944 will make all the memory sharable.
+
 
 ## Dependencies
 
